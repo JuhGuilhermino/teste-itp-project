@@ -8,7 +8,7 @@ int main() {
     
     //craindo um arq de saida
     FILE * arq_saida;
-    arq_saida = fopen("saida.ppm", "wt");
+    arq_saida = fopen("saida.txt", "wt");
 
     //lendo o cabeçalho
     char tipo1;
@@ -17,7 +17,7 @@ int main() {
     fprintf(arq_saida, "%c%d\n%d %d\n%d\n", tipo1, tipo2, coluna, linha, rgb_max);
 
     //declarando a matriz
-    int img[256][256];
+    int img[linha][coluna*3];
 
     //ler img e transformar em uma matriz
     for (int l = 0; l < linha; l++){
@@ -28,12 +28,24 @@ int main() {
         }
     }
 
-    //printf("%d %d %d", img[0][0], img[0][1], img[0][2]);
+    //reduzir img
+    int nova_img[linha/2][(coluna*3/2)];
+    int sr, sg, sb =0;
+
+    //somar r
+    int s;
+    for (int l = 0; l < 2; l++){
+        for (int c = 0; c < 6; c+=3){
+            int r = img[l][c];
+            s += r;    
+        }  
+    }
+    fprintf(arq_saida, "%d ", s);
 
     //trasnformar em escala de cinza 
-    int r, g, b;
-    for (int l = 0; l < linha; l++){
+    /*for (int l = 0; l < linha; l++){
         for (int c = 0; c < coluna*3; c+=3){
+            int r, g, b;
             int cinza;
             r = img[l][c];
             g = img[l][c+1];
@@ -44,7 +56,7 @@ int main() {
         if (l<linha-1){
             fprintf(arq_saida, "\n");
         }
-    }
+    }*/
     
     //imprimir img
     /*for (int l = 0; l < linha; l++){
